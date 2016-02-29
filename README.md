@@ -26,6 +26,9 @@ omf install shellder
 
 You'll need powerline patched font.
 
+##### Gentoo with rxvt-unicode
+Please consider the rxvt-unicode mailinglist for installation (http://lists.schmorp.de/pipermail/rxvt-unicode/2016q1/002207.html).
+
 --------
 
 [MIT License] © [simnalamburt] et [al]
