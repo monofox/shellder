@@ -1,11 +1,10 @@
 # Set these options in your config.fish (if you want to :])
 #
 #     set -g theme_display_user yes
+#     set -g theme_display_time yes
 #     set -g theme_hostname never
 #     set -g theme_hostname always
 #     set -g default_user your_normal_user
-
-
 
 # Backward compatibility
 #
@@ -218,10 +217,18 @@ function svn_get_revision -d "get the current revision number"
   svn info 2> /dev/null | sed -n 's/Revision:\ //p'
 end
 
+function prompt_datetime -d "displays the current time"
+    set timep (date "+%H:%M:%S")
+    prompt_segment FF8700 870000 $timep
+end
 
 function prompt_status -d "the symbols for a non zero exit status, root and background jobs"
     if [ $RETVAL -ne 0 ]
-      prompt_segment black red "✘"
+      set statusp "✘ $RETVAL"
+      prompt_segment black red $statusp
+    else
+      set statusp "✔"
+      prompt_segment black green $statusp
     end
 
     # if superuser (uid == 0)
@@ -246,6 +253,9 @@ end
 #
 function fish_prompt
   set -g RETVAL $status
+  if [ "$theme_display_time" = "yes" ]
+  	prompt_datetime
+  end
   prompt_status
   prompt_virtual_env
   prompt_user
